@@ -1,7 +1,6 @@
 public class Student {
     String name, id;
-    private double cgpa, waiverPercentage, paidAmount;
-    final double fees = 50000;
+    private double cgpa, waiverPercentage, paidAmount, fees = 50000;
 
     public Student(String name, String id, double cgpa, double paidAmat) {
         this.name = name;
@@ -16,6 +15,10 @@ public class Student {
             waiverPercentage = 100;
         else if (cgpa >= 3.5)
             waiverPercentage = 50;
+    }
+
+    public void setFees(double fees) {
+        this.fees = fees;
     }
 
     public void setWaiverPercentage(double waiverPercentage) {
@@ -47,11 +50,11 @@ public class Student {
     // }
     // }
 
-    public class TestStudentError {
+    public class TestStudentOutput {
         public static void main(String[] args) {
                     Student st1 = new Student("Abir", "111111", 3.65, 15000);
                     st1.setWaiverPercentage(70);
-                    Student.fees = 40000;
+                    st1.setFees(40000);
                     double dueAmt = st1.getDueAmount();
                     System.out.printf(String.format("%s:%.1f\n", st1.name, dueAmt));
             }
