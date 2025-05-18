@@ -1,3 +1,4 @@
+package Que_Solve;
 public class Student {
     String name, id;
     private double cgpa, waiverPercentage, paidAmount, fees = 50000;
