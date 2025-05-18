@@ -30,6 +30,9 @@ public class Student {
         return payableAmount - paidAmount;
     }
 
+    // 4.(a)
+
+
     // public class TestStudentOutput {
     // public static void main(String[] args) {
     // Student st1 = new Student("Abir", "111111", 3.65, 15000);
@@ -50,13 +53,22 @@ public class Student {
     // }
     // }
 
-    public class TestStudentOutput {
-        public static void main(String[] args) {
-                    Student st1 = new Student("Abir", "111111", 3.65, 15000);
-                    st1.setWaiverPercentage(70);
-                    st1.setFees(40000);
-                    double dueAmt = st1.getDueAmount();
-                    System.out.printf(String.format("%s:%.1f\n", st1.name, dueAmt));
-            }
-    }
+
+// 4.(b)
+
+
+    // public class TestStudentOutput {
+    //     public static void main(String[] args) {
+    //                 Student st1 = new Student("Abir", "111111", 3.65, 15000);
+    //                 st1.setWaiverPercentage(70);
+    //                 st1.setFees(40000);
+    //                 double dueAmt = st1.getDueAmount();
+    //                 System.out.printf(String.format("%s:%.1f\n", st1.name, dueAmt));
+    //         }
+    // }
+
+    // Output:
+    // Abir:-3000.0
+
+
 }
