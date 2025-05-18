@@ -27,23 +27,33 @@ public class Student {
         return payableAmount - paidAmount;
     }
 
-    public class TestStudentOutput {
+    // public class TestStudentOutput {
+    // public static void main(String[] args) {
+    // Student st1 = new Student("Abir", "111111", 3.65, 15000);
+    // Student st2 = new Student("Liza", "222222", 3.25, 10000);
+
+    // st2.setWaiverPercentage(80);
+    // double dueAmount1 = st1.getDueAmount();
+    // double dueAmount2 = st2.getDueAmount();
+    // System.out.println("Dues of students:");
+    // System.out.printf(String.format("%s.%.1f\n", st1.name, dueAmount1));
+    // System.out.printf(String.format("%s.%.1f\n", st2.name, dueAmount2));
+
+    // // Output:
+    // // Dues of students:
+    // // Abir.10000.0
+    // // Liza.-0.0
+
+    // }
+    // }
+
+    public class TestStudentError {
         public static void main(String[] args) {
-            Student st1 = new Student("Abir", "111111", 3.65, 15000);
-            Student st2 = new Student("Liza", "222222", 3.25, 10000);
-
-            st2.setWaiverPercentage(80);
-            double dueAmount1 = st1.getDueAmount();
-            double dueAmount2 = st2.getDueAmount();
-            System.out.println("Dues of students:");
-            System.out.printf(String.format("%s.%.1f\n", st1.name, dueAmount1));
-            System.out.printf(String.format("%s.%.1f\n", st2.name, dueAmount2));
-
-          // Output:
-            // Dues of students:
-            // Abir.10000.0
-            // Liza.-0.0
-
-        }
+                    Student st1 = new Student("Abir", "111111", 3.65, 15000);
+                    st1.setWaiverPercentage(70);
+                    Student.fees = 40000;
+                    double dueAmt = st1.getDueAmount();
+                    System.out.printf(String.format("%s:%.1f\n", st1.name, dueAmt));
+            }
     }
 }
