@@ -41,8 +41,8 @@ public class Student {
 
           // Output:
             // Dues of students:
-            // Abir.25000.0
-            // Liza.20000.0
+            // Abir.10000.0
+            // Liza.-0.0
 
         }
     }
