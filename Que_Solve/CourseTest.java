@@ -2,7 +2,7 @@ package Que_Solve;
 
 class InvalidCourseException extends Exception {
     public InvalidCourseException(String titel,int minCredit) {
-        super(titel + " is not a valid course. " + minCredit + " Credits");
+        super(titel + " is not a valid course as it doesn't fulfill the minimum credit requirement of "+ minCredit + " credits.");
     }
 }
 
@@ -13,7 +13,7 @@ public class CourseTest {
         int credits = 2;
 
         try {
-            
+
             int minCredits = 3;
             if (credits < minCredits) {
                 throw new InvalidCourseException(courseName, minCredits);
