@@ -1,3 +1,5 @@
+package Que_Solve;
+
 import java.util.*;
 
 class Threads extends Thread {
