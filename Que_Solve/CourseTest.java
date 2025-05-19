@@ -1,3 +1,4 @@
+package Que_Solve;
 
 class InvalidCourseException extends Exception {
     public InvalidCourseException(String titel, int Credits, int minCredit) {
