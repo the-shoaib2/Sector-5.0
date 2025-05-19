@@ -2,6 +2,8 @@ package Que_Solve;
 
 import java.util.*;
 
+import Threads;
+
 class Threads extends Thread {
 
     private final String threadName;
