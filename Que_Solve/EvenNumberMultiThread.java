@@ -2,11 +2,13 @@ package Que_Solve;
 
 
 class ThreadEven extends Thread {
+    // 1. private
     int start;
     int end;
     int[] Arr;
     int index;
 
+    // 2. constructor
     ThreadEven(int start, int end, int[] Arr, int index) {
         this.start = start;
         this.end = end;
@@ -14,16 +16,13 @@ class ThreadEven extends Thread {
         this.index = index;
     }
 
+    @Override
+    // 3. run method override
     public void run() {
         for (int i = start; i <= end; i++) {
             if (i % 2 == 0) {
                 Arr[index] = i;
                 index++;
-                // try {
-                //     Thread.sleep(10);
-                // } catch (InterruptedException e) {
-                //     System.out.println("Thread interrupted");
-                // }
             }
         }
     }
