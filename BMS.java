@@ -176,7 +176,7 @@ class Bank {
     public String getBankName() { return bankName; }
 }
 
-public class Main {
+public class BMS {
     private static Bank bank = new Bank("SWITCH BANK");
 
     public static void openNewAccount(Scanner sc) {
