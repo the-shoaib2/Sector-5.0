@@ -13,10 +13,10 @@ interface IUserActions {
 // Abstract User class (Abstraction, Inheritance)
 abstract class User implements IUserActions {
     protected String userID, name, phone, dob, nid, fatherName, motherName, address;
-    private static int userCounter = 0; // static counter for all users
+    private static int userCounter = 0;
 
     public User(String name, String phone, String dob, String nid, String fatherName, String motherName, String address) {
-        this.userID = String.format("%05d", ++userCounter); // e.g., 00001, 00002, ...
+        this.userID = String.format("%05d", ++userCounter);
         this.name = name;
         this.phone = phone;
         this.dob = dob;
@@ -42,15 +42,17 @@ class Account {
     private double balance;
 
     public Account(double initialBalance) {
-        this.accountNumber = "ACC" + (System.currentTimeMillis() % 100000000000L); // auto-generated
+        this.accountNumber = "ACC" + (System.currentTimeMillis() % 100000000000L);
         this.balance = initialBalance;
     }
 
     public void deposit(double amount) { balance += amount; }
+
     public void withdraw(double amount) throws Exception {
         if (amount > balance) throw new Exception("Insufficient balance");
         balance -= amount;
     }
+
     public double getBalance() { return balance; }
     public String getAccountNumber() { return accountNumber; }
 }
@@ -119,6 +121,10 @@ class Customer extends User {
 
     @Override
     public void deposit(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount. Deposit must be greater than zero.");
+            return;
+        }
         account.deposit(amount);
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         FileManager.exportTransaction(account.getAccountNumber(), name + " deposited: " + amount + " at " + time);
@@ -126,6 +132,10 @@ class Customer extends User {
 
     @Override
     public void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount. Withdrawal must be greater than zero.");
+            return;
+        }
         try {
             account.withdraw(amount);
             String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -148,11 +158,12 @@ class Customer extends User {
     }
 }
 
-// Employee class (example, can be expanded)
+// Employee class (example)
 class Employee extends User {
     public Employee(String name, String phone, String dob, String nid, String fatherName, String motherName, String address) {
         super(name, phone, dob, nid, fatherName, motherName, address);
     }
+
     @Override public void displayMenu() { System.out.println("Employee menu..."); }
     @Override public void deposit(double amount) {}
     @Override public void withdraw(double amount) {}
@@ -168,10 +179,14 @@ class Bank {
     public Bank(String bankName) { this.bankName = bankName; }
 
     public void addCustomer(Customer c) { customers.add(c); }
+
     public Customer findCustomerByName(String name) {
-        for (Customer c : customers) if (c.getName().equalsIgnoreCase(name)) return c;
+        for (Customer c : customers) {
+            if (c.getName().equalsIgnoreCase(name)) return c;
+        }
         return null;
     }
+
     public List<Customer> getCustomers() { return customers; }
     public String getBankName() { return bankName; }
 }
@@ -195,9 +210,15 @@ public class BMS {
         String mother = sc.nextLine();
         System.out.print("Enter Address: ");
         String address = sc.nextLine();
-        System.out.print("Enter Initial Deposit Amount: ");
-        double initialBalance = sc.nextDouble();
-        sc.nextLine(); // consume newline
+
+        double initialBalance;
+        while (true) {
+            System.out.print("Enter Initial Deposit Amount: ");
+            initialBalance = sc.nextDouble();
+            sc.nextLine(); // consume newline
+            if (initialBalance > 0) break;
+            System.out.println("Amount must be greater than zero.");
+        }
 
         Customer newCustomer = new Customer(name, phone, dob, nid, father, mother, address, initialBalance);
         bank.addCustomer(newCustomer);
@@ -211,20 +232,10 @@ public class BMS {
         System.out.print("\nEnter your Name or UserID to login: ");
         String input = sc.nextLine().trim();
         Customer customer = null;
-        // Try to find by userID first
         for (Customer c : bank.getCustomers()) {
-            if (c.getUserID().equalsIgnoreCase(input)) {
+            if (c.getUserID().equalsIgnoreCase(input) || c.getName().equalsIgnoreCase(input)) {
                 customer = c;
                 break;
-            }
-        }
-        // If not found by userID, try by name
-        if (customer == null) {
-            for (Customer c : bank.getCustomers()) {
-                if (c.getName().equalsIgnoreCase(input)) {
-                    customer = c;
-                    break;
-                }
             }
         }
         if (customer == null) {
@@ -245,13 +256,25 @@ public class BMS {
             choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    System.out.print("Enter amount to deposit: ");
-                    double depositAmount = sc.nextDouble();
+                    double depositAmount;
+                    do {
+                        System.out.print("Enter amount to deposit: ");
+                        depositAmount = sc.nextDouble();
+                        if (depositAmount <= 0) {
+                            System.out.println("Invalid amount. Deposit must be greater than zero. Try again.");
+                        }
+                    } while (depositAmount <= 0);
                     customer.deposit(depositAmount);
                     break;
                 case 2:
-                    System.out.print("Enter amount to withdraw: ");
-                    double withdrawAmount = sc.nextDouble();
+                    double withdrawAmount;
+                    do {
+                        System.out.print("Enter amount to withdraw: ");
+                        withdrawAmount = sc.nextDouble();
+                        if (withdrawAmount <= 0) {
+                            System.out.println("Invalid amount. Withdrawal must be greater than zero. Try again.");
+                        }
+                    } while (withdrawAmount <= 0);
                     customer.withdraw(withdrawAmount);
                     break;
                 case 3:
@@ -266,6 +289,7 @@ public class BMS {
         } while (choice != 4);
         sc.nextLine(); // consume newline
     }
+    
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
